@@ -32,6 +32,9 @@ app.component('card-component', CardComponent)
 import ModalComponent from './components/Modal.vue'
 app.component('modal-component', ModalComponent)
 
+import AlertComponent from './components/Alert.vue'
+app.component('alert-component', AlertComponent)
+
 
 
 app.mount('#app');

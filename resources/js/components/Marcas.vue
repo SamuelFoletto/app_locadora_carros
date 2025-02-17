@@ -45,6 +45,14 @@
         </div>
 
         <modal-component id="modalMarca" titulo="Adicionar Marca">
+
+            <template v-slot:alertas>
+                <alert-component tipo="success"></alert-component>
+                <alert-component tipo="danger"></alert-component>
+
+            </template>
+
+
             <template v-slot:conteudo>
                 <div class="form-group">
                     <input-conteiner-component titulo="Nome da marca" id="novoNome" id-help="novoNomeHelp" texto-ajuda="Informe o nome da marca">
@@ -75,6 +83,19 @@
 <script>
 
 export default {
+    computed:{
+        token(){
+            let token = document.cookie.split(';').find(indice => {
+                return indice.includes('token=')
+            })
+
+            token = token.split('=')[1]
+
+            token = 'Beader ' + token
+
+            return token
+        }
+    },
     data(){
         return{
             nomeMarca: '',
@@ -83,6 +104,7 @@ export default {
         }
     },
     methods: {
+
         carregarImagem(e){
             this.arquivoImagem = e.target.files
         },
@@ -96,7 +118,8 @@ export default {
             let config = {
                 headers:{
                     'Content-Type': 'multipart/form-data',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': this.token
                 }
             }
 
