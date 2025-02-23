@@ -2,10 +2,20 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import { createStore } from 'vuex';
 
 
+const store = createStore({
+    state(){
+        return {
+            item: {}
+        }
+    }
+})
 
 const app = createApp({});
+
+app.use(store);
 
 import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
@@ -35,6 +45,8 @@ app.component('modal-component', ModalComponent)
 import AlertComponent from './components/Alert.vue'
 app.component('alert-component', AlertComponent)
 
+import PaginateComponent from './components/Paginate.vue'
+app.component('paginate-component', PaginateComponent)
 
 
 app.mount('#app');
