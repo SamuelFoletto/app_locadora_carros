@@ -41,7 +41,7 @@
                             }"
                         :visualizar="{visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaVisualizar'}"
                         :atualizar="true"
-                        :remover="true">
+                        :remover="{visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaRemover'}">
                         </table-component>
                     </template>
 
@@ -128,6 +128,28 @@
             </template>
         </modal-component>
 
+
+
+            <!-- Modal de remoção de marca -->
+        <modal-component id="modalMarcaRemover" titulo="Remover Marca">
+            <template v-slot:alertas>
+
+            </template>
+
+            <template v-slot:conteudo>
+                <input-conteiner-component titulo="ID">
+                    <input type="text" class="form-control" :value="$store.state.item.id" disabled>
+                </input-conteiner-component>
+                <input-conteiner-component titulo="Nome da Marca">
+                    <input type="text" class="form-control" :value="$store.state.item.nome" disabled>
+                </input-conteiner-component>
+            </template>
+
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-outline-danger" @click="remover">Remover</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </template>
+        </modal-component>
     </div>
 </template>
 
@@ -218,8 +240,6 @@ export default {
                 })
         },
 
-
-
         pesquisar(){
             let filtro = ''
             for(let chave in this.busca){
@@ -242,8 +262,27 @@ export default {
             }
 
             this.carregarLista()
-        }
+        },
 
+        remover()
+        {
+            let confirmacao = confirm('Tem certeza que deseja remover este registro?')
+            if(!confirmacao){
+                return false;
+            }
+
+            let url = this.urlBase + '/' + this.$store.state.item.id
+
+
+            axios.post()
+                .then(response => {
+                    console.log('Registro removido com sucesso!')
+                })
+                .catch(errors => {
+                    console.log('Houve um erro na tentativa de remoção do registro')
+                })
+
+        }
 
     },
     mounted() {
